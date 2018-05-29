@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Express Livres</title>
+    <link rel="stylesheet" href="../public/style.css">
+</head>
+<body>
+        <div class="central">
+            <% include ./partials/header %>
+    
+        <h1><%= title %></h1>
+        <div class="french-livres">
+            <% for(livres of livres) {%>
+                <div><%= livres.title %> : <%= livres.year %></div>
+            <% } %>
+        </div>
+        <br>
+
+        <div>
+            <form action="/livres" method="post">
+                <label for="livretitle">Titre du livre</label>
+                <input type="text" name="livretitle" id="livretitle" >
+                <label for="livreyear">Titre du livre</label>
+                <input type="text" name="livreyear" id="livreyear" >
+                <button type="submit">Ajouter</button>
+            </form>
+        </div>
+        
+        
+        
+    </div>
+    <% include ./partials/footer %>
+
+    <script>
+        const form = document.querySelector("form");
+        form.addEventListener("submit", addLivre);
+
+        function addLivre(event) {
+            event.preventDefault();
+
+            if(fetch){
+                fetch("/livres",{
+                    method: "POST",
+                    body: new FormData(form)
+                })
+                .then(checkStatus)
+                .catch(function(error){
+                    console.error("request failed", error);
+                })
+            } else {
+                //jQuery, WHR
+            }
+        }
+
+        function checkStatus(response){
+            if(response.status >= 200 && response.status < 300){
+                let newLivreDiv = document.createElement("div");
+                const livretitle = document.getElementById("livretitle").value;
+                const livreyear = document.getElementById("livreyear").value;
+                newLivreDiv.innerHTML = `${livretitle} : ${livreyear}`;
+                document.querySelector('.french-livres').appendChild(newLivreDiv);
+                form.reset();
+
+            }
+        }
+    </script>
+</body>
+</html>

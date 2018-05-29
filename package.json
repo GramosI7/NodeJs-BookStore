@@ -1,0 +1,18 @@
+{
+  "name": "NodeJsProjet",
+  "version": "1.0.0",
+  "main": "app.js",
+  "author": "Gramos",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "global": "^4.3.2",
+    "nodemon": "^1.17.5"
+  }
+}
