@@ -9,3 +9,15 @@ body{
 a{
     text-decoration: none;
 }
+
+.french-livres{
+    display: flex;
+}
+
+.french-livres__container {
+    border: 1px solid black;
+}
+
+.french-livres__container__p{
+    padding: 10px;
+}

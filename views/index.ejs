@@ -10,11 +10,29 @@
         
         <% include ./partials/header %>
 
-    <h1>Express Livre : Le site pour les bibliophiles</h1>
+    <h1>Express Livre : Le site pour les bibliophiles ! </h1>
     <div>
         La page d'accueil
     </div>
-    
+
+    <div class="french-livres">
+            <% for(livres of livres) {%>
+                <div class="french-livres__container">
+                    <p class="french-livres__container__p">
+                        <%= livres.livretitle %>
+                    </p>
+                    <p class="french-livres__container__p">
+                        <%= livres.livreauteur %>
+                    </p>
+                    <p class="french-livres__container__p">
+                        <%= livres.livreyear %>
+                    </p>
+                    <p class="french-livres__container__p">
+                        <%= livres.livredescription %>
+                    </p>
+                </div>
+                <% } %>
+        </div>
 
 </div>
 <% include ./partials/footer %>

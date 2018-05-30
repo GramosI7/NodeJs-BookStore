@@ -1,69 +1,106 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Express Livres</title>
     <link rel="stylesheet" href="../public/style.css">
 </head>
-<body>
-        <div class="central">
-            <% include ./partials/header %>
-    
-        <h1><%= title %></h1>
-        <div class="french-livres">
-            <% for(livres of livres) {%>
-                <div><%= livres.title %> : <%= livres.year %></div>
-            <% } %>
-        </div>
-        <br>
 
-        <div>
-            <form action="/livres" method="post">
-                <label for="livretitle">Titre du livre</label>
-                <input type="text" name="livretitle" id="livretitle" >
-                <label for="livreyear">Titre du livre</label>
-                <input type="text" name="livreyear" id="livreyear" >
-                <button type="submit">Ajouter</button>
-            </form>
-        </div>
-        
-        
-        
+<body>
+    <div class="central">
+        <% include ./partials/header %>
+
+            <h1>
+                <%= title %>
+            </h1>
+            <div class="french-livres">
+                <% for(livres of livres) {%>
+                    <div class="french-livres__container">
+                        <p class="french-livres__container__p">
+                            <%= livres.livretitle %>
+                        </p>
+
+                        <img id="imgcourverture" src="<%= livres.livrecouverture %>" width="300px" heigth="300px" alt="">
+
+                        <p class="french-livres__container__p">
+                            <%= livres.livreauteur %>
+                        </p>
+                        <p class="french-livres__container__p">
+                            <%= livres.livreyear %>
+                        </p>
+                        <p class="french-livres__container__p">
+                            <%= livres.livredescription %>
+                        </p>
+                    </div>
+                    <% } %>
+            </div>
+            <br>
+
+            <div>
+                <form action="/livres" method="post">
+                    <label for="livretitle">Titre du livre</label>
+                    <input type="text" name="livretitle" id="livretitle">
+
+                    <label for="livrecouverture">Couverture</label>
+                    <input type="text" name="livrecouverture" id="livrecouverture">
+
+                    <label for="livreauteur">Auteur</label>
+                    <input type="text" name="livreauteur" id="livreauteur">
+
+                    <label for="livreyear">Date</label>
+                    <input type="text" name="livreyear" id="livreyear">
+
+                    <label for="livredescription">Description</label>
+                    <input type="text" name="livredescription" id="livredescription">
+
+                    <button type="submit">Ajouter</button>
+                </form>
+            </div>
+
+
+
     </div>
     <% include ./partials/footer %>
 
-    <script>
-        const form = document.querySelector("form");
-        form.addEventListener("submit", addLivre);
+        <script>
+            const form = document.querySelector("form");
+            form.addEventListener("submit", addLivre);
 
-        function addLivre(event) {
-            event.preventDefault();
+            function addLivre(event) {
+                event.preventDefault();
 
-            if(fetch){
-                fetch("/livres",{
-                    method: "POST",
-                    body: new FormData(form)
-                })
-                .then(checkStatus)
-                .catch(function(error){
-                    console.error("request failed", error);
-                })
-            } else {
-                //jQuery, WHR
+                if (fetch) {
+                    fetch("/livres", {
+                            method: "POST",
+                            body: new FormData(form)
+                        })
+                        .then(checkStatus)
+                        .catch(function (error) {
+                            console.error("request failed", error);
+                        })
+                } else {
+                    //jQuery, WHR
+                }
             }
-        }
 
-        function checkStatus(response){
-            if(response.status >= 200 && response.status < 300){
-                let newLivreDiv = document.createElement("div");
-                const livretitle = document.getElementById("livretitle").value;
-                const livreyear = document.getElementById("livreyear").value;
-                newLivreDiv.innerHTML = `${livretitle} : ${livreyear}`;
-                document.querySelector('.french-livres').appendChild(newLivreDiv);
-                form.reset();
+            function checkStatus(response) {
+                if (response.status >= 200 && response.status < 300) {
+                    let newLivreDiv = document.createElement("div");
 
+                    const livretitle = document.getElementById("livretitle").value;
+                    const livrecouverture = document.getElementById("livrecouverture").value;
+                    const livreauteur = document.getElementById("livreauteur").value;
+                    const livreyear = document.getElementById("livreyear").value;
+                    const livredescription = document.getElementById("livredescription").value;
+
+                    newLivreDiv.innerHTML = `${livretitle} ${livreauteur} ${livreyear}, ${livredescription}`;
+                    document.querySelector('.french-livres').appendChild(newLivreDiv);
+                    form.reset();
+
+                }
             }
-        }
-    </script>
+        </script>
 </body>
+
 </html>

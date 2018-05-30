@@ -7,8 +7,11 @@ const upload = multer();
 const mongoose = require("mongoose");
 
 
+const config = require('./config');
+
+console.log(config);
 //connect mongodb avec message pour savoir si on est connecté 
-mongoose.connect('mongodb://livres:expresslivres1@ds241530.mlab.com:41530/expresslivres');
+mongoose.connect(`mongodb://${config.db.user}:${config.db.password}@ds241530.mlab.com:41530/expresslivres`);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: cannot connect to my DB"));
 db.once("open", () => {
@@ -18,21 +21,13 @@ db.once("open", () => {
 //envoie données sur mlab
 const livresSchema = mongoose.Schema({
     livretitle: String,
-    livreyear: Number
+    livreauteur: String,
+    livreyear: Number,
+    livredescription: String
 });
 
 const Livre = mongoose.model("livres", livresSchema);
-const title = "Terminator";
-const year = 1980;
 
-const myLivre = new Livre({ livretitle: title, livreyear: year});
-myLivre.save((err, saveLivre) => {
-    if(err) {
-        console.log(error);
-    } else {
-        console.log("savedLivre", saveLivre);
-    }
-});
 
 //port a ecouter
 const PORT = 3000;
@@ -49,7 +44,18 @@ let frenchLivres =  [];
 
 // route home
 app.get("/", (req,res) => {
-    res.render("index");
+    const title = "Livres francais des trente dernieres années;"
+
+    frenchLivres = [];
+    Livre.find((err, livres) => {
+        if(err) {
+            console.error('rien trouvé');
+            res.sendStatus(500);
+        } else {
+            frenchLivres = livres
+            res.render("index", { livres: frenchLivres });
+        }
+    })
 });
 
 //route content tous les livres
@@ -57,13 +63,17 @@ app.get("/livres", (req, res) => {
 
     const title = "Livres francais des trente dernieres années;"
 
-    frenchLivres = [
-        {title: "Le Fabuleux destin d'amelie Poulain", year: 2001},
-        {title: "Buffet froid", year: 1979},
-        {title: "Le diner de cons", year: 1998},
-        {title: "De rouille et d'os", year: 2012}
-    ];
-    res.render("livre", { livres: frenchLivres, title: title });
+    frenchLivres = [];
+    Livre.find((err, livres) => {
+        if(err) {
+            console.error('rien trouvé');
+            res.sendStatus(500);
+        } else {
+            frenchLivres = livres;
+            console.log(frenchLivres);
+            res.render("livre", { livres: frenchLivres, title: title });
+        }
+    })
 });
 
 // app.post("/livres", (req, res) =>{
@@ -84,10 +94,23 @@ app.post("/livres", upload.fields([]), (req,res) => {
     } else {
         const formData = req.body;
         console.log("formDtata", formData);
-        const newLivre = { title : req.body.livretitle, year: req.body.livreyear};
-        frenchLivres = [...frenchLivres, newLivre];
-        res.sendStatus(201);
-        
+
+        const title = req.body.livretitle;
+        const couverture = req.body.livrecouverture;
+        const auteur = req.body.livreauteur;
+        const year = req.body.livreyear;
+        const description = req.body.livredescription;
+
+        const myLivre = new Livre({ livretitle: title, livrecouverture: couverture, livreauteur: auteur, livreyear: year, livredescription: description });
+        myLivre.save((err, saveLivre) => {
+            if(err) {
+                console.error(err);
+                return;
+            } else {
+                console.log(saveLivre);
+                res.sendStatus(201);
+            }
+        })  
     }
 });
 //en cours
