@@ -1,3 +1,8 @@
+*{
+    border: 0px;
+    margin: 0px;
+}
+
 body{
     font-family: Consolas, Monaco, "Andale Mono", monospace;
 }
@@ -10,14 +15,54 @@ a{
     text-decoration: none;
 }
 
-.french-livres{
-    display: flex;
+.title-livre{
+    margin-bottom: 5%;
+    margin-top: 5%;
+    text-align: center;
 }
 
+.french-livres{
+    display: flex;
+
+}
+
+.navbar-a{
+    font-size: 20px;
+}
+
+form{
+    display: block;
+    margin: 30px;
+}
+
+.french-livres__container__img{
+    width: 300px;
+}
+input{
+    border: 1px solid black;
+}
 .french-livres__container {
     border: 1px solid black;
+    margin: 0 auto;
+    margin-bottom: 10%; 
 }
 
 .french-livres__container__p{
     padding: 10px;
+    text-align: center;
+}
+
+.navbar{
+    background: #34495e;
+    padding: 20px;
+}
+
+.navbar__lien{
+    color: white;
+}
+
+.footer{
+    background: #34495e;
+    padding: 20px;
+
 }

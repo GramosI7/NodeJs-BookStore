@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Express Livres</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link rel="stylesheet" href="../public/style.css">
 </head>
 
@@ -11,24 +12,26 @@
     <div class="central">
         <% include ./partials/header %>
 
-            <h1>
+            <h1 class="title-livre">
                 <%= title %>
             </h1>
             <div class="french-livres">
                 <% for(livres of livres) {%>
                     <div class="french-livres__container">
-                        <p class="french-livres__container__p">
+                        <h3 class="french-livres__container__p">
                             <%= livres.livretitle %>
-                        </p>
+                        </h3>
 
-                        <img id="imgcourverture" src="<%= livres.livrecouverture %>" width="300px" heigth="300px" alt="">
+                        <img class="french-livres__container__img"src="https://www.monbestseller.com/sites/default/files/conseil/couverture_livre_-_monbestseller.png" alt="">
 
-                        <p class="french-livres__container__p">
+                        <h4 class="french-livres__container__p">
                             <%= livres.livreauteur %>
                         </p>
-                        <p class="french-livres__container__p">
+
+                        <h4 class="french-livres__container__p">
                             <%= livres.livreyear %>
                         </p>
+
                         <p class="french-livres__container__p">
                             <%= livres.livredescription %>
                         </p>
@@ -37,7 +40,7 @@
             </div>
             <br>
 
-            <div>
+            <!-- <div>
                 <form action="/livres" method="post">
                     <label for="livretitle">Titre du livre</label>
                     <input type="text" name="livretitle" id="livretitle">
@@ -56,7 +59,7 @@
 
                     <button type="submit">Ajouter</button>
                 </form>
-            </div>
+            </div> -->
 
 
 
@@ -94,7 +97,7 @@
                     const livreyear = document.getElementById("livreyear").value;
                     const livredescription = document.getElementById("livredescription").value;
 
-                    newLivreDiv.innerHTML = `${livretitle} ${livreauteur} ${livreyear}, ${livredescription}`;
+                    newLivreDiv.innerHTML = `${livretitle} ${livrecouverture} ${livreauteur} ${livreyear}, ${livredescription}`;
                     document.querySelector('.french-livres').appendChild(newLivreDiv);
                     form.reset();
 

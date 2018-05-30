@@ -76,19 +76,8 @@ app.get("/livres", (req, res) => {
     })
 });
 
-// app.post("/livres", (req, res) =>{
-//     console.log("le titre : " + req.body.livretitle);
-//     console.log("l'année : " + req.body.livreyear);
-//     const newLivre = { title : req.body.livretitle, year: req.body.livreyear};
-//     frenchLivres = [...frenchLivres, newLivre];
-//     console.log(frenchLivres);
-
-//     res.sendStatus(201);
-// });
-
-
 //permet de faire fonctionner le formulaire et d'inserer des livres
-app.post("/livres", upload.fields([]), (req,res) => {
+app.post("/livres/add", upload.fields([]), (req,res) => {
     if(!req.body) {
         return res.sendStatus(500);
     } else {
@@ -115,7 +104,7 @@ app.post("/livres", upload.fields([]), (req,res) => {
 });
 //en cours
 app.get("/livres/add", (req,res) => {
-    res.send("prochainement, un formulaire d'ajout ici !")
+    res.render("addBook")
 });
 
 //route pour details du livre
@@ -128,3 +117,14 @@ app.get("/livres/:id", (req, res) => {
 app.listen(PORT, () => {
     console.log(`Le serveur ${PORT} tourne !`)
 });
+
+
+// app.post("/livres", (req, res) =>{
+//     console.log("le titre : " + req.body.livretitle);
+//     console.log("l'année : " + req.body.livreyear);
+//     const newLivre = { title : req.body.livretitle, year: req.body.livreyear};
+//     frenchLivres = [...frenchLivres, newLivre];
+//     console.log(frenchLivres);
+
+//     res.sendStatus(201);
+// });
