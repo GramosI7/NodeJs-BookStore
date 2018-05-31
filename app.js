@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
 
 const config = require('./config');
 
-console.log(config);
+// console.log(config);
 //connect mongodb avec message pour savoir si on est connecté 
 mongoose.connect(`mongodb://${config.db.user}:${config.db.password}@ds241530.mlab.com:41530/expresslivres`);
 const db = mongoose.connection;
@@ -34,7 +34,8 @@ const PORT = 3000;
 
 //fichier static fichier css
 app.use("/public",express.static("public"));
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: false }));
+var urlencodedParser = bodyParser.urlencoded({extended: false});
 
 //declaration de ejs
 app.set("views", "./views");
@@ -44,7 +45,6 @@ let frenchLivres =  [];
 
 // route home
 app.get("/", (req,res) => {
-    const title = "Livres francais des trente dernieres années;"
 
     frenchLivres = [];
     Livre.find((err, livres) => {
@@ -61,7 +61,7 @@ app.get("/", (req,res) => {
 //route content tous les livres
 app.get("/livres", (req, res) => {
 
-    const title = "Livres francais des trente dernieres années;"
+    // const title = "Livres francais des trente dernieres années;"
 
     frenchLivres = [];
     Livre.find((err, livres) => {
@@ -71,13 +71,13 @@ app.get("/livres", (req, res) => {
         } else {
             frenchLivres = livres;
             console.log(frenchLivres);
-            res.render("livre", { livres: frenchLivres, title: title });
+            res.render("livre", { livres: frenchLivres});
         }
     })
 });
 
 //permet de faire fonctionner le formulaire et d'inserer des livres
-app.post("/livres/add", upload.fields([]), (req,res) => {
+app.post("/livres/add", urlencodedParser, (req,res) => {
     if(!req.body) {
         return res.sendStatus(500);
     } else {
@@ -85,12 +85,12 @@ app.post("/livres/add", upload.fields([]), (req,res) => {
         console.log("formDtata", formData);
 
         const title = req.body.livretitle;
-        const couverture = req.body.livrecouverture;
+        const couv = req.body.livrecouv;
         const auteur = req.body.livreauteur;
         const year = req.body.livreyear;
         const description = req.body.livredescription;
 
-        const myLivre = new Livre({ livretitle: title, livrecouverture: couverture, livreauteur: auteur, livreyear: year, livredescription: description });
+        const myLivre = new Livre({ livretitle: title, livrecouv: couv, livreyear: year, livredescription: description });
         myLivre.save((err, saveLivre) => {
             if(err) {
                 console.error(err);
@@ -111,6 +111,32 @@ app.get("/livres/add", (req,res) => {
 app.get("/livres/:id", (req, res) => {
     const id = req.params.id;
     res.render("livre-details", {livreId: id});
+
+});
+
+app.get("/livres-details/:id", (req,res) => {
+    const id = req.params.id;
+    Livre.findById(id, (err, livre) => {
+        res.render("livre-details", {livre: livre})
+    });
+});
+
+
+
+app.post("/livres-details/:id", urlencodedParser, (req, res) => {
+    // console.log("ceci est le req.body: "req.body);
+    if(!req.body) {
+        return res.sendStatus(500);
+    }
+    console.log("livretitle: ", req.body.livretitle, "livreyear: ", req.body.livreyear);
+    const id = req.params.id;
+    Livre.findByIdAndUpdate(id, {$set: {livretitle: req.body.livretitle, livreyear: req.body.livreyear}}, {new : true},(err,livre) => {
+       if(err) {
+           console.log(error);
+           return res.send("le livre n'a pas pu etre mis a jour")
+       } 
+       res.redirect("/livres");
+    })
 });
 
 //ecouter le port

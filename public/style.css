@@ -26,6 +26,14 @@ a{
 
 }
 
+tr{
+    border: 1px solid black;
+}
+td{
+    border: 1px solid black;
+
+}
+
 .navbar-a{
     font-size: 20px;
 }
