@@ -141,6 +141,14 @@ app.get("/livres-details/:id", (req,res) => {
     });
 });
 
+app.get("/livres-info/:id", urlencodedParser, (req, res) => {
+
+const id = req.params.id;
+Livre.findById(id, (err, livre) => {
+    console.log(livre)
+    res.render("livre-info", {livres: livre})
+});
+});
 
 
 app.post("/livres-details/:id", urlencodedParser, (req, res) => {
@@ -151,6 +159,7 @@ app.post("/livres-details/:id", urlencodedParser, (req, res) => {
     // console.log("livretitle: ", req.body.livretitle, "livreyear: ", req.body.livreyear);
     const id = req.params.id;
     Livre.findByIdAndUpdate(id, {$set: {
+        livreid : req.body._id,
         livretitle: req.body.livretitle, 
         livrecouv: req.body.livrecouv, 
         livreauteur: req.body.livreauteur, 
