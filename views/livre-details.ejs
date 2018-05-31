@@ -10,27 +10,39 @@
 </head>
 
 <body>
-    <div class="central">
+   
         <% include ./partials/header %>
+<div class="container">
+        <h1>Details</h1>
 
-            <h1>Details</h1>
+        <%= livre.livretitle %> !
+            <div>
+                <form action="/livres-details/<%= livre._id %>" method="post">
+                    <ledeng>Modifier le livre</ledeng>
+                    
+                    <label for="livretitle">Titre</label>
+                    <input type="text" class="form-control" name="livretitle" value="<%= livre.livretitle %>" placeholder="">
 
-            <%= livre.livretitle %> !
-                <div>
-                    <form action="/livres-details/<%= livre._id %>" method="post">
-                        <ledeng>Modifier le livre</ledeng>
-                        <label for="livretitle">Titre</label>
-                        <input type="text" class="form-control" name="livretitle" value="<%= livre.livretitle %>" placeholder="">
+                    <label for="livrecouv">Couverture</label>
+                    <input type="text" class="form-control" name="livrecouv" value="<%= livre.livrecouv %>" placeholder="">
 
-                        <label for="livreyear">Titre</label>
-                        <input type="text" class="form-control" name="livretitle" value="<%= livre.livreyear %>" placeholder="">
+                    <label for="livreauteur">Auteur</label>
+                    <input type="text" class="form-control" name="livreauteur" value="<%= livre.livreauteur %>" placeholder="">
+                    
+                    <label for="livreyear">Date</label>
+                    <input type="text" class="form-control" name="livreyear" value="<%= livre.livreyear %>" placeholder="">
 
-                        <button class="btn btn-info" type="submit">Ajouter</button>
+                    <label for="livredescription">Description</label>
+                    <textarea class="form-control" name="livredescription" value="<%= livre.livredescription%>" rows="3"></textarea>
+                    <br>
+                    <button class="btn btn-info" type="submit">Ajouter</button>
 
-                    </form>
-                </div>
+                </form>
+            </div>
 
-    </div>
+</div>
+
+            
     <% include ./partials/footer %>
 
 

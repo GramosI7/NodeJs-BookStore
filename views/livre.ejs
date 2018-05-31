@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
         crossorigin="anonymous">
     <link rel="stylesheet" href="../public/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
 </head>
 
 <body>
@@ -47,9 +48,9 @@
                                         <%=livres.livredescription%>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-info">Edit</button>
+                                        <button type="button" class="btn btn-info"> <a href="/livres-details/<%= livres._id %>">Edit</a></button>
                                         <hr>
-                                        <button type="button" class="btn btn-info">Delete</button>
+                                        <button id="supprimer" type="button" class="btn btn-info">Delete</button>
                                     </td>
                                 </tr>
                                 <% } %>
@@ -61,63 +62,23 @@
     </div>
     <% include ./partials/footer %>
 
-        <script>
-            // const form = document.querySelector("form");
-            // form.addEventListener("submit", addLivre);
-
-            // function addLivre(event) {
-            //     event.preventDefault();
-
-            //     if (fetch) {
-            //         fetch("/livres", {
-            //                 method: "POST",
-            //                 body: new FormData(form)
-            //             })
-            //             .then(checkStatus)
-            //             .catch(function (error) {
-            //                 console.error("request failed", error);
-            //             })
-            //     } else {
-            //         //jQuery, WHR
-            //     }
-            // }
-
-            // function checkStatus(response) {
-            //     if (response.status >= 200 && response.status < 300) {
-            //         let newLivreDiv = document.createElement("div");
-
-            //         const livretitle = document.getElementById("livretitle").value;
-            //         const livrecouverture = document.getElementById("livrecouverture").value;
-            //         const livreauteur = document.getElementById("livreauteur").value;
-            //         const livreyear = document.getElementById("livreyear").value;
-            //         const livredescription = document.getElementById("livredescription").value;
-
-            //         newLivreDiv.innerHTML = `${livretitle} ${livrecouverture} ${livreauteur} ${livreyear}, ${livredescription}`;
-            //         document.querySelector('.french-livres').appendChild(newLivreDiv);
-            //         form.reset();
-
-            //     }
-            // }
-        </script>
+       
 </body>
+<script>
+        var btnSuppr = document.getElementById("supprimer");
+        btnSuppr.addEventListener("click", deleteDocument);
+
+        function deleteDocument() {
+            var livreId = <%- JSON.stringify(livres._id) %>;
+            var url = "/livres-details/" + livreId;
+            axios.delete(url)
+            .then(function(response){
+                window.location = "/";
+            })
+            .catch(function(error){
+                console.log(error);
+            });
+        }
+    </script>
 
 </html>
-<!-- <div class="french-livres__container">
-                        <h3 class="french-livres__container__p">
-                            <%= livres.livretitle %>
-                        </h3>
-
-                        <img class="french-livres__container__img"src="https://www.monbestseller.com/sites/default/files/conseil/couverture_livre_-_monbestseller.png" alt="">
-
-                        <h4 class="french-livres__container__p">
-                            <%= livres.livreauteur %>
-                        </p>
-
-                        <h4 class="french-livres__container__p">
-                            <%= livres.livreyear %>
-                        </p>
-
-                        <p class="french-livres__container__p">
-                            <%= livres.livredescription %>
-                        </p>
-                    </div> -->

@@ -90,7 +90,7 @@ app.post("/livres/add", urlencodedParser, (req,res) => {
         const year = req.body.livreyear;
         const description = req.body.livredescription;
 
-        const myLivre = new Livre({ livretitle: title, livrecouv: couv, livreyear: year, livredescription: description });
+        const myLivre = new Livre({ livretitle: title, livrecouv: couv, livreauteur: auteur, livreyear: year, livredescription: description });
         myLivre.save((err, saveLivre) => {
             if(err) {
                 console.error(err);
@@ -101,6 +101,13 @@ app.post("/livres/add", urlencodedParser, (req,res) => {
             }
         })  
     }
+});
+
+app.delete("/livres-details/:id", (req, res) => {
+    const id = req.params.id;
+    Livre.findByIdAndRemove(id, (err, livre) => {
+        res.sendStatus(202);
+    });
 });
 //en cours
 app.get("/livres/add", (req,res) => {
@@ -130,7 +137,13 @@ app.post("/livres-details/:id", urlencodedParser, (req, res) => {
     }
     console.log("livretitle: ", req.body.livretitle, "livreyear: ", req.body.livreyear);
     const id = req.params.id;
-    Livre.findByIdAndUpdate(id, {$set: {livretitle: req.body.livretitle, livreyear: req.body.livreyear}}, {new : true},(err,livre) => {
+    Livre.findByIdAndUpdate(id, {$set: {
+        livretitle: req.body.livretitle, 
+        livrecouv: req.body.livrecouv, 
+        livreauteur: req.body.livreauteur, 
+        livreyear: req.body.livreyear, 
+        livredescription: req.body.livredescription
+    }}, {new : true},(err,livre) => {
        if(err) {
            console.log(error);
            return res.send("le livre n'a pas pu etre mis a jour")
