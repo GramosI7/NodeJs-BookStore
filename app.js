@@ -21,9 +21,11 @@ db.once("open", () => {
 //envoie données sur mlab
 const livresSchema = mongoose.Schema({
     livretitle: String,
+    livrecouv : String,
     livreauteur: String,
     livreyear: Number,
-    livredescription: String
+    livredescription: String,
+    livreprix: Number
 });
 
 const Livre = mongoose.model("livres", livresSchema);
@@ -89,17 +91,28 @@ app.post("/livres/add", urlencodedParser, (req,res) => {
         const auteur = req.body.livreauteur;
         const year = req.body.livreyear;
         const description = req.body.livredescription;
+        const prix = req.body.livreprix;
 
-        const myLivre = new Livre({ livretitle: title, livrecouv: couv, livreauteur: auteur, livreyear: year, livredescription: description });
+        const myLivre = new Livre({ 
+            livretitle: title, 
+            livrecouv: couv, 
+            livreauteur: auteur, 
+            livreyear: year, 
+            livredescription: description,
+            livreprix : prix
+         });
         myLivre.save((err, saveLivre) => {
             if(err) {
                 console.error(err);
                 return;
             } else {
                 console.log(saveLivre);
-                res.sendStatus(201);
+                res.redirect("/");
             }
+            
+
         })  
+
     }
 });
 
@@ -135,14 +148,15 @@ app.post("/livres-details/:id", urlencodedParser, (req, res) => {
     if(!req.body) {
         return res.sendStatus(500);
     }
-    console.log("livretitle: ", req.body.livretitle, "livreyear: ", req.body.livreyear);
+    // console.log("livretitle: ", req.body.livretitle, "livreyear: ", req.body.livreyear);
     const id = req.params.id;
     Livre.findByIdAndUpdate(id, {$set: {
         livretitle: req.body.livretitle, 
         livrecouv: req.body.livrecouv, 
         livreauteur: req.body.livreauteur, 
         livreyear: req.body.livreyear, 
-        livredescription: req.body.livredescription
+        livredescription: req.body.livredescription,
+        livreprix : req.body.livreprix
     }}, {new : true},(err,livre) => {
        if(err) {
            console.log(error);

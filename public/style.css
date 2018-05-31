@@ -8,7 +8,6 @@ body{
 }
 
 .central{
-    min-height: 250px;
 }
 
 a{
@@ -23,16 +22,8 @@ a{
 
 .french-livres{
     display: flex;
-
 }
 
-tr{
-    border: 1px solid black;
-}
-td{
-    border: 1px solid black;
-
-}
 
 .navbar-a{
     font-size: 20px;
@@ -45,6 +36,8 @@ form{
 
 .french-livres__container__img{
     width: 300px;
+    display: block;
+    margin: 0 auto;
 }
 input{
     border: 1px solid black;
@@ -73,4 +66,8 @@ input{
     background: #34495e;
     padding: 20px;
 
+}
+
+.tab-img{
+    width: 100px;
 }

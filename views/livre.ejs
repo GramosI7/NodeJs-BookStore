@@ -26,6 +26,7 @@
                                 <th scope="col">Auteur</th>
                                 <th scope="col">Date</th>
                                 <th scope="col">Description</th>
+                                <th scope="col">Prix</th>
                                 <th scope="col">Modifier</th>
                             </tr>
                         </thead>
@@ -33,7 +34,8 @@
                             <% for(livres of livres) {%>
                                 <tr>
                                     <td>
-                                        <%=livres.livrecouv%>
+                                        <img class="tab-img" src="<%=livres.livrecouv%>" alt="">
+                                        
                                     </td>
                                     <td>
                                         <%=livres.livretitle%>
@@ -48,7 +50,14 @@
                                         <%=livres.livredescription%>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-info"> <a href="/livres-details/<%= livres._id %>">Edit</a></button>
+                                        <%=livres.livreprix%> €
+                                    </td>
+                                    <td>
+                                            <a href="/livres-details/<%= livres._id %>">
+                                        <button type="button" class="btn btn-info">
+                                           Edit
+                                        </button>
+                                    </a>
                                         <hr>
                                         <button id="supprimer" type="button" class="btn btn-info">Delete</button>
                                     </td>
@@ -62,23 +71,23 @@
     </div>
     <% include ./partials/footer %>
 
-       
+
 </body>
 <script>
-        var btnSuppr = document.getElementById("supprimer");
-        btnSuppr.addEventListener("click", deleteDocument);
+    var btnSuppr = document.getElementById("supprimer");
+    btnSuppr.addEventListener("click", deleteDocument);
 
-        function deleteDocument() {
-            var livreId = <%- JSON.stringify(livres._id) %>;
-            var url = "/livres-details/" + livreId;
-            axios.delete(url)
-            .then(function(response){
+    function deleteDocument() {
+        var livreId = <%- JSON.stringify(livres._id) %>;
+        var url = "/livres-details/" + livreId;
+        axios.delete(url)
+            .then(function (response) {
                 window.location = "/";
             })
-            .catch(function(error){
+            .catch(function (error) {
                 console.log(error);
             });
-        }
-    </script>
+    }
+</script>
 
 </html>

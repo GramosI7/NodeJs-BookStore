@@ -1,53 +1,59 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Express Livres</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="../public/style.css">
 </head>
+
 <body>
     <div class="central">
-        
+
         <% include ./partials/header %>
 
-        <div class="container">
+            <div class="container">
                 <h2>Express Livre : Le site pour les bibliophiles ! </h2>
                 <div>
                     La page d'accueil
                 </div>
 
                 <div class="french-livres">
-                        <% for(livres of livres) {%>
-                            <div class="french-livres__container">
-                                <h3 class="french-livres__container__p">
-                                    <%= livres.livretitle %>
-                                </h3>
-                
-                                <img class="french-livres__container__img"src="https://www.monbestseller.com/sites/default/files/conseil/couverture_livre_-_monbestseller.png" alt="">
-                
-                                <h4 class="french-livres__container__p">
-                                    <%= livres.livreauteur %>
-                                </p>
-                
-                                <h4 class="french-livres__container__p">
-                                    <%= livres.livreyear %>
-                                </p>
-                
-                                <p class="french-livres__container__p">
-                                    <%= livres.livredescription %>
-                                </p>
-                            </div>
-                            <% } %>
-                    </div>
-                
+                    <% for(livres of livres) {%>
+                        <div class="french-livres__container">
+                            <h3 class="french-livres__container__p">
+                                <%= livres.livretitle %>
+                            </h3>
+
+                            <img class="french-livres__container__img" src="<%= livres.livrecouv %>" alt="">
+
+                            <h4 class="french-livres__container__p">
+                                <%= livres.livreauteur %>
+                                    </p>
+
+                                    <h4 class="french-livres__container__p">
+                                        <%= livres.livreyear %>
+                                            </p>
+
+                                            <p class="french-livres__container__p">
+                                                <%= livres.livredescription %>
+                                            </p>
+                                            <p class="french-livres__container__p">
+                                                <%= livres.livreprix %> €
+                                            </p>
+                        </div>
+                        <% } %>
                 </div>
-        </div>
 
-    
+            </div>
+    </div>
 
-   
-<% include ./partials/footer %>
+
+
+
+    <% include ./partials/footer %>
 
 </body>
 
@@ -89,4 +95,5 @@
             }
         }
     </script> -->
+
 </html>
