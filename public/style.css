@@ -20,10 +20,24 @@ a{
     text-align: center;
 }
 
+.container__home-img{
+    min-width: 18rem;
+    margin: 40px;
+}
+
 .french-livres{
     display: flex;
 }
 
+.container__home{
+    display: flex;
+   max-width: 100%;
+   flex-wrap: wrap;
+}
+
+.container__livre{
+    margin-left: 20px;
+}
 
 .navbar-a{
     font-size: 20px;

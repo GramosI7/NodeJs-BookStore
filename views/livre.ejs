@@ -59,7 +59,7 @@
                                         </button>
                                     </a>
                                         <hr>
-                                        <button id="supprimer" type="button" class="btn btn-info">Delete</button>
+                                        <button id="btnSuppr" type="button" class="btn btn-info">Delete</button>
                                     </td>
                                 </tr>
                                 <% } %>
@@ -74,7 +74,7 @@
 
 </body>
 <script>
-    var btnSuppr = document.getElementById("supprimer");
+    var btnSuppr = document.getElementById("btnSuppr");
     btnSuppr.addEventListener("click", deleteDocument);
 
     function deleteDocument() {
@@ -82,7 +82,7 @@
         var url = "/livres-details/" + livreId;
         axios.delete(url)
             .then(function (response) {
-                window.location = "/";
+                window.location = "/livres";
             })
             .catch(function (error) {
                 console.log(error);

@@ -14,46 +14,77 @@
 
         <% include ./partials/header %>
 
-            <div class="container">
+            <!-- <div class="container">
                 <h2>Express Livre : Le site pour les bibliophiles ! </h2>
                 <div>
                     La page d'accueil
                 </div>
+                <div class="container">
+                        <div class="french-livres">
+                                    <div class="french-livres__container">
+                                        <h3 class="french-livres__container__p">
+                                            <%= livres.livretitle %>
+                                        </h3>
+            
+                                        <img class="french-livres__container__img" src="<%= livres.livrecouv %>" alt="">
+            
+                                        <h4 class="french-livres__container__p">
+                                            <%= livres.livreauteur %>
+                                                </p>
+            
+                                                <h4 class="french-livres__container__p">
+                                                    <%= livres.livreyear %>
+                                                        </p>
+            
+                                                        <p class="french-livres__container__p">
+                                                            <%= livres.livredescription %>
+                                                        </p>
+                                                        <p class="french-livres__container__p">
+                                                            <%= livres.livreprix %> €
+                                                        </>
+                                    </div>
+                            </div>
+            
+                        </div>
+                </div>
 
-                <div class="french-livres">
+            
+    </div> -->
+
+
+            <div class="container">
+                <br>
+                <h2 class="text-center">Express Livre : Le site pour les bibliophiles ! </h2>
+                <br>
+                <div class="container__home">
                     <% for(livres of livres) {%>
-                        <div class="french-livres__container">
-                            <h3 class="french-livres__container__p">
-                                <%= livres.livretitle %>
-                            </h3>
-
-                            <img class="french-livres__container__img" src="<%= livres.livrecouv %>" alt="">
-
-                            <h4 class="french-livres__container__p">
-                                <%= livres.livreauteur %>
-                                    </p>
-
-                                    <h4 class="french-livres__container__p">
-                                        <%= livres.livreyear %>
-                                            </p>
-
-                                            <p class="french-livres__container__p">
-                                                <%= livres.livredescription %>
-                                            </p>
-                                            <p class="french-livres__container__p">
-                                                <%= livres.livreprix %> €
-                                            </p>
+                        <div class="card container__home-img" style="width: 18rem;">
+                            <img class="card-img-top" src="<%=livres.livrecouv%>" alt="Card image cap">
+                            <div class="card-body container__livre">
+                                <h3 class="card-title">
+                                    <%=livres.livretitle%>
+                                </h3>
+                                <h5 class="card-title">
+                                    <%=livres.livreauteur%>
+                                </h5>
+                                <p class="card-text">
+                                    <%= livres.livredescription %>
+                                </p>
+                                <a href="#" class="btn btn-primary">
+                                    <%=livres.livreprix%> €</a>
+                            </div>
                         </div>
                         <% } %>
                 </div>
 
+
             </div>
-    </div>
 
 
 
 
-    <% include ./partials/footer %>
+
+            <% include ./partials/footer %>
 
 </body>
 
